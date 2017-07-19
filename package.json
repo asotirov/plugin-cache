@@ -1,0 +1,14 @@
+{
+  "name": "cache",
+  "version": "0.0.1",
+  "main": "cache.js",
+  "dependencies": {
+    "cache-manager": "^2.4.0",
+    "cache-manager-fs": "^1.0.6"
+  },
+  "plugin": {
+    "provides": [
+      "cache"
+    ]
+  }
+}
