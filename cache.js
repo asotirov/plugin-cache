@@ -11,8 +11,8 @@ module.exports = function (options, imports, register) {
         const cache = cacheManager.caching({
             ignoreCacheErrors: true,
             store: redisStore,
-            host: redisOptions.redis.host,
-            port: redisOptions.redis.port,
+            host: redisOptions.host,
+            port: redisOptions.port,
             options: {
                 ttl: Number.MAX_VALUE, //CACHE ME OUTSIDE, HOW 'BOUT DAT
                 maxsize: 1000 * 1000 * 1000 /* max size in bytes on disk */
