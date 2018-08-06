@@ -1,6 +1,6 @@
 {
   "name": "cache",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "cache.js",
   "dependencies": {
     "cache-manager": "^2.9.0",
@@ -8,7 +8,7 @@
   },
   "plugin": {
     "consumes": [
-      "options-cache"
+      "options.cache"
     ],
     "provides": [
       "cache"
