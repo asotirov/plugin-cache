@@ -4,7 +4,7 @@
   "main": "cache.js",
   "dependencies": {
     "cache-manager": "^2.9.0",
-    "cache-manager-fs": "^0.6.0"
+    "cache-manager-redis": "^0.6.0"
   },
   "plugin": {
     "provides": [
