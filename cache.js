@@ -4,10 +4,9 @@ const cacheManager = require("cache-manager"),
 
 module.exports = function (options, imports, register) {
     try {
-        let cacheImportKey = 'cache';
-        let optionsCache = options[cacheImportKey] || imports['options.' + cacheImportKey];
+        let optionsCache = options || imports['options.cache'];
         if (!optionsCache || !optionsCache.redis) {
-            throw new Error(`[BuilderCache] options["${cacheImportKey}"].redis is not provided. Make sure to include {cache:redis} in options plugin or include :{redis} in serverConfig for legacy builder`)
+            throw new Error(`[BuilderCache] options.redis is not provided. Make sure to include {cache:redis} in options plugin or include {redis} in serverConfig for legacy builder`)
         }
         const cache = cacheManager.caching({
             ignoreCacheErrors: true,
