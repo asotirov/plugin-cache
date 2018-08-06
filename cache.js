@@ -4,15 +4,15 @@ const cacheManager = require("cache-manager"),
 
 module.exports = function (options, imports, register) {
     try {
-        let optionsCache = options || imports['options.cache'];
-        if (!optionsCache || !optionsCache.redis) {
+        let redisOptions = options.redis || (imports['options.cache'] ? imports['options.cache'].redis : null);
+        if (!redisOptions) {
             throw new Error(`[BuilderCache] options.redis is not provided. Make sure to include {cache:redis} in options plugin or include {redis} in serverConfig for legacy builder`)
         }
         const cache = cacheManager.caching({
             ignoreCacheErrors: true,
             store: redisStore,
-            host: optionsCache.redis.host,
-            port: optionsCache.redis.port,
+            host: redisOptions.redis.host,
+            port: redisOptions.redis.port,
             options: {
                 ttl: Number.MAX_VALUE, //CACHE ME OUTSIDE, HOW 'BOUT DAT
                 maxsize: 1000 * 1000 * 1000 /* max size in bytes on disk */
