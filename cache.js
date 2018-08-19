@@ -27,7 +27,25 @@ module.exports = function (options, imports, register) {
             }
         });
 
-        register(null, {cache});
+        (function () {
+            let prefix = 'cache';
+
+            function prefixFirst(fn) {
+                return function (key, ...rest) {
+                    fn(`${prefix}:${key}`, ...rest);
+                }
+            }
+
+            register(null, {
+                cache: Object.assign(Object.create(Object.getPrototypeOf(cache)), cache, {
+                    wrap: prefixFirst(cache.wrap),
+                    get: prefixFirst(cache.get),
+                    set: prefixFirst(cache.set),
+                    del: prefixFirst(cache.del),
+                    ttl: prefixFirst(cache.ttl)
+                })
+            });
+        }())
     } catch (err) {
         register(err);
     }
