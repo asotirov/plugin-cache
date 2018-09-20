@@ -32,13 +32,22 @@ module.exports = function (options, imports, register) {
 
             function prefixFirst(fn) {
                 return function (key, ...rest) {
-                    fn(`${prefix}:${key}`, ...rest);
+                    return fn(`${prefix}:${key}`, ...rest);
                 }
             }
 
+            let wrapPrefixed = prefixFirst(cache.wrap);
             register(null, {
                 cache: Object.assign(Object.create(Object.getPrototypeOf(cache)), cache, {
-                    wrap: prefixFirst(cache.wrap),
+                    wrap: (key, handler, cb) => {
+                        return wrapPrefixed(key, async (cb) => {
+                            try {
+                                cb(null, await handler());
+                            } catch (err) {
+                                cb(err);
+                            }
+                        }, cb);
+                    },
                     get: prefixFirst(cache.get),
                     set: prefixFirst(cache.set),
                     del: prefixFirst(cache.del),
