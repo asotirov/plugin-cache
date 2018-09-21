@@ -8,9 +8,9 @@ module.exports = ['cache', ({options}) => {
     if (!redisOptions) {
         throw new Error(`[BuilderCache] options.redis is not provided. Make sure to include {cache:redis} in options plugin or include {redis} in serverConfig for legacy builder`)
     }
-    console.log('REDIS', redisOptions);
+    console.log('[REDIS.OPTIONS]', redisOptions);
     const cache = cacheManager.caching({
-        ignoreCacheErrors: false,
+        ignoreCacheErrors: true,
         store: redisStore,
         host: redisOptions.host,
         port: redisOptions.port,
@@ -44,17 +44,14 @@ module.exports = ['cache', ({options}) => {
                         try {
                             cb(null, await handler());
                         } catch (err) {
-                            console.log('cache.wrap.1', err);
                             cb(err);
                         }
                     }, cb);
                 } catch (err) {
-                    console.log('cache.wrap.2', err);
                     (async () => {
                         try {
                             cb(null, await handler());
                         } catch (err) {
-                            console.log('cache.wrap.3', err);
                             cb(err);
                         }
                     })();
