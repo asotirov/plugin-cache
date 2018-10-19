@@ -4,10 +4,17 @@ const cacheManager = require("cache-manager"),
 
 module.exports = ['cache', ({options}) => {
     let prefix = options.prefix || 'cache';
-    let redisOptions = options.redis || (options.cache ? options.cache.redis : null);
-    if (!redisOptions) {
-        throw new Error(`[BuilderCache] options.redis is not provided. Make sure to include {cache:redis} in options plugin or include {redis} in serverConfig for legacy builder`)
+    let redisOptions = options.redis || (options.cache && options.cache.redis ? options.cache.redis : options.cache);
+    if (redisOptions === undefined) {
+        throw new Error(`[BuilderCache] options.redis|options.cache.redis|options.cache=false is not provided. Make sure to include {cache:redis} in options plugin or include {redis} in serverConfig for legacy builder`)
     }
+    if (!redisOptions) {
+        console.log('Cache not initialized');
+        return {
+            cache: {}
+        }
+    }
+
     console.log('[REDIS.OPTIONS]', redisOptions);
     const cache = cacheManager.caching({
         ignoreCacheErrors: true,
