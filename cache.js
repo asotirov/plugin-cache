@@ -27,11 +27,12 @@ module.exports = ['cache', ({options}) => {
         },
         retry_strategy: function (options) {
             if (options.attempt > 1) {
-                // Stop retrying after first attempts.
+                // Stop retrying after second attempt.
+                console.error(`[REDIS.ERROR]`, options.error);
                 return undefined;
             }
-            // Increase reconnect delay by 150ms.
-            return options.attempt * 150;
+            // Increase reconnect delay by 1 sec.
+            return options.attempt * 1;
         }
     });
 

@@ -1,6 +1,6 @@
 {
   "name": "cache",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "cache.js",
   "dependencies": {
     "cache-manager": "^2.9.0",
