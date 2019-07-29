@@ -1,5 +1,5 @@
 {
-  "name": "cache",
+  "name": "plugin-cache",
   "version": "0.2.4",
   "main": "cache.js",
   "dependencies": {
